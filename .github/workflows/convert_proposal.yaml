@@ -24,7 +24,7 @@ jobs:
         id: proposal_file_exists
         uses: andstor/file-existence-action@v1
         with:
-          files: "$INPUT_FILE"
+          files: ${{ env.INPUT_FILE }}
       - name: run pandoc
         uses: docker://pandoc/core:2.9
         if: steps.proposal_file_exists.outputs.files_exists == 'true'
