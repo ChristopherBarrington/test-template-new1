@@ -6,6 +6,13 @@ on:
     paths:
       - 'babs/docs/proposal.docx'
 
+# set up environment variables
+env:
+  INPUT_FILE: 'babs/docs/proposal.docx'
+  OUTPUT_FILE: 'babs/docs/proposal.md'
+  OUTPUT_FORMAT: 'gfm'
+
+# define the work to be done
 jobs:
   convert-proposal-document:
     runs-on: ubuntu-latest
@@ -17,17 +24,17 @@ jobs:
         id: proposal_file_exists
         uses: andstor/file-existence-action@v1
         with:
-          files: "babs/docs/proposal.docx"
+          files: "$INPUT_FILE"
       - name: run pandoc
         uses: docker://pandoc/core:2.9
         if: steps.proposal_file_exists.outputs.files_exists == 'true'
         with:
-          args: "--to gfm --output babs/docs/proposal.md babs/docs/proposal.docx" # gets appended to pandoc command
+          args: "--to $OUTPUT_FORMAT --output $OUTPUT_FILE $INPUT_FILE" # gets appended to pandoc command
       - name: commit converted proposal
         if: steps.proposal_file_exists.outputs.files_exists == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add babs/docs/proposal.md
+          git add $OUTPUT_FILE
           git commit -m "babs-o-matic converted proposal.docx to markdown"
           git push
