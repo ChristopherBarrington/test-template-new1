@@ -29,12 +29,12 @@ jobs:
         uses: docker://pandoc/core:2.9
         if: steps.proposal_file_exists.outputs.files_exists == 'true'
         with:
-          args: "--to $OUTPUT_FORMAT --output $OUTPUT_FILE $INPUT_FILE" # gets appended to pandoc command
+          args: "--to ${OUTPUT_FORMAT} --output ${OUTPUT_FILE} ${INPUT_FILE}" # gets appended to pandoc command
       - name: commit converted proposal
         if: steps.proposal_file_exists.outputs.files_exists == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add $OUTPUT_FILE
+          git add ${{ env.OUTPUT_FILE }}
           git commit -m "babs-o-matic converted proposal.docx to markdown"
           git push
