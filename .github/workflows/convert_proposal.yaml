@@ -10,8 +10,8 @@ jobs:
   convert-proposal-document:
     runs-on: ubuntu-latest
   
-  steps:
-    - uses: actions/checkout@v3
-    - uses: docker://pandoc/core:2.9
-      with:
-        args: "--to gfm --output babs/docs/proposal.md babs/docs/proposal.docx" # gets appended to pandoc command
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker://pandoc/core:2.9
+        with:
+          args: "--to gfm --output babs/docs/proposal.md babs/docs/proposal.docx" # gets appended to pandoc command
