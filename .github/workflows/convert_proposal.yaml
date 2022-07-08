@@ -24,6 +24,7 @@ jobs:
         with:
           args: "--to gfm --output babs/docs/proposal.md babs/docs/proposal.docx" # gets appended to pandoc command
       - name: commit converted proposal
+        if: steps.proposal_file_exists.outputs.files_exists == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
