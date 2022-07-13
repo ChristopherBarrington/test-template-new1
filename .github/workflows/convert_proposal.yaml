@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'babs/docs/proposal.docx'
+  workflow_dispatch:
 
 # set up environment variables
 env:
